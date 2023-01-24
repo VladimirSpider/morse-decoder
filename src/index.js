@@ -57,8 +57,8 @@ function decode(expr) {
 
     getLettersArray(expr);
 
-    const newArray = lettersArray.map((letterSymbols) => {
-        const morseLetter = letterSymbols.filter((item, index) => {
+    const morseSymbolsArray = lettersArray.map((letterSymbols) => {
+        const trueLetterSymbols = letterSymbols.filter((item, index) => {
             if (item === '*') return item;
 
             if (item === '1') return item;
@@ -68,26 +68,26 @@ function decode(expr) {
             }
         });
 
-        const readyMorseLetter = morseLetter.map((item, index) => {
+        const joinLetterSymbols = trueLetterSymbols.map((item, index) => {
             if (item === '*') return item;
 
             if (index !==0 && index % 2 !== 0) {
-                return morseLetter[index - 1] + item;
+                return trueLetterSymbols[index - 1] + item;
             }
         });
 
-        const endReadyMorseLetter = readyMorseLetter.filter((item) => !!item);
+        const readyLetterSymbols = joinLetterSymbols.filter((item) => !!item);
 
-        const finalArray = endReadyMorseLetter.map((item) => {
+        const letterMorseSymbols = readyLetterSymbols.map((item) => {
             if (item === '*') return item;
             if (item === '10') return '.';
             if (item === '11') return '-';
         });
 
-        return finalArray.join('');
+        return letterMorseSymbols.join('');
     });
 
-    newArray.forEach((item) => {
+    morseSymbolsArray.forEach((item) => {
         if (item === '**********') {
             finalLettersArray.push(' ');
         } else {
